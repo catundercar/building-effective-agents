@@ -1,0 +1,25 @@
+{
+  "name": "phase-0-llm-core",
+  "version": "0.1.0",
+  "description": "Phase 0 Lab: Build the Augmented LLM Core — the heart of your Agent",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:lab1": "vitest run --reporter=verbose src/__tests__/lab1.test.ts",
+    "test:lab2": "vitest run --reporter=verbose src/__tests__/lab2.test.ts",
+    "test:lab3": "vitest run --reporter=verbose src/__tests__/lab3.test.ts",
+    "test:all": "vitest run --reporter=verbose",
+    "grade": "tsx scripts/grade.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.1.0",
+    "@types/node": "^22.0.0"
+  }
+}
