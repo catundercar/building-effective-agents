@@ -1,12 +1,14 @@
 import { phase0Content } from "./phase0";
 import { phase0ContentZhCN } from "./phase0.zh-CN";
+import { phase1Content } from "./phase1";
+import { phase1ContentZhCN } from "./phase1.zh-CN";
 import type { PhaseContent, Lesson } from "./types";
 import type { Locale } from "../i18n";
 
 const PHASE_CONTENT: Record<string, Record<number, PhaseContent>> = {
-  "zh-TW": { 0: phase0Content },
-  "zh-CN": { 0: phase0ContentZhCN },
-  en: { 0: phase0Content }, // TODO: add phase0ContentEn when ready
+  "zh-TW": { 0: phase0Content, 1: phase1Content },
+  "zh-CN": { 0: phase0ContentZhCN, 1: phase1ContentZhCN },
+  en: { 0: phase0Content, 1: phase1Content }, // TODO: add English versions when ready
 };
 
 export function getPhaseContent(phaseId: number, locale: Locale = "zh-TW"): PhaseContent | undefined {
