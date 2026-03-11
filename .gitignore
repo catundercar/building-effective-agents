@@ -1,9 +1,9 @@
 # Dependencies
-node_modules/
+website/node_modules/
 
 # Build output
-dist/
-build/
+website/dist/
+website/build/
 
 # Environment variables
 .env
@@ -26,6 +26,16 @@ Thumbs.db
 
 # TypeScript
 *.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+.eggs/
+*.so
+.venv/
+venv/
 
 # Claude local config
 .claude/
