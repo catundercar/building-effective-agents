@@ -239,6 +239,62 @@ export const phase0Content: PhaseContent = {
                 "代碼 ≈ 每 3 個字符 1 token",
               ],
             },
+            // ── Tokenizer 導入 ──
+            {
+              type: "heading",
+              level: 3,
+              text: "Tokenizer：Token 是怎麼產生的",
+            },
+            {
+              type: "paragraph",
+              text: "上面我們看到文字被切成 token，但這個切割過程並不是隨意的。LLM 使用一種叫做 tokenizer 的元件來決定如何切分——它需要在「詞表大小」和「序列長度」之間做取捨：詞表太小，每個字都是獨立 token，序列會很長；詞表太大，模型參數量爆炸。Subword tokenization 就是解決這個問題的方法。",
+            },
+            // ── BPE 演算法 ──
+            {
+              type: "heading",
+              level: 3,
+              text: "BPE 演算法：Tokenizer 的核心",
+            },
+            {
+              type: "paragraph",
+              text: "Claude 等現代 LLM 使用的 tokenizer 基於 Byte-Pair Encoding (BPE) 演算法。BPE 的核心思想很簡單：從最小的單位開始，不斷合併最常見的組合。",
+            },
+            {
+              type: "list",
+              ordered: true,
+              items: [
+                "從最小單位開始——將所有文字拆成單個字元（或 byte）",
+                "統計頻率——找出相鄰 pair 中出現次數最多的組合",
+                "合併最高頻 pair——將它變成一個新的 token，加入詞表",
+                "重複步驟 2-3——直到詞表達到目標大小（通常數萬到十幾萬）",
+              ],
+            },
+            {
+              type: "diagram",
+              content:
+                'BPE 合併過程示例（以 "lower" 為例）：\n\n初始：  [l] [o] [w] [e] [r]          ← 5 個字元 token\n第 1 輪：[l] [o] [w] [er]            ← \"e\"+\"r\" 最高頻，合併\n第 2 輪：[l] [ow] [er]               ← \"o\"+\"w\" 最高頻，合併\n第 3 輪：[low] [er]                  ← \"l\"+\"ow\" 最高頻，合併\n最終：  [lower]                      ← 整個詞成為一個 token',
+            },
+            // ── 語言差異 ──
+            {
+              type: "heading",
+              level: 3,
+              text: "為什麼不同語言的 Token 效率不同",
+            },
+            {
+              type: "paragraph",
+              text: "回到上面的估算規則——為什麼英文約 4 字元一個 token，中文卻 1.5 字元就要一個？原因就在 BPE 的訓練語料：訓練數據以英文為主，英文的字元組合被大量合併，形成了高效率的長 token；而中文在訓練語料中相對少見，合併次數較少，因此每個漢字往往需要更多 byte 來表示。",
+            },
+            {
+              type: "callout",
+              variant: "tip",
+              text: "實際影響：同樣的 200K context window，英文場景大約能放 15 萬字，但中文場景只能放約 6 萬字——有效容量約為英文的 40%。在設計中文 Agent 時，必須更積極地管理 context 使用量。",
+            },
+            // ── 探索建議 ──
+            {
+              type: "callout",
+              variant: "info",
+              text: "動手試試：使用 Anthropic 的 token counting API（見本課參考資料）來計算不同文字的 token 數。試試同一段話的中英文版本，觀察 token 數差異。你也可以使用 OpenAI 開源的 tiktoken 工具來視覺化 BPE 的切分結果。",
+            },
             {
               type: "heading",
               level: 3,
@@ -479,6 +535,18 @@ for num in count_slowly():
           description:
             "AWS 的經典文章，解釋指數退避和 jitter 的重要性，避免驚群效應。",
           url: "https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/",
+        },
+        {
+          title: "Anthropic Token Counting",
+          description:
+            "Anthropic 官方 token 計數 API 文檔，可用來精確計算不同文字的 token 數量。",
+          url: "https://docs.anthropic.com/en/docs/build-with-claude/token-counting",
+        },
+        {
+          title: "Byte-Pair Encoding Tokenization (Hugging Face)",
+          description:
+            "Hugging Face NLP 課程中對 BPE 演算法的詳細圖文教學，含互動範例。",
+          url: "https://huggingface.co/learn/nlp-course/en/chapter6/5",
         },
       ],
     },
