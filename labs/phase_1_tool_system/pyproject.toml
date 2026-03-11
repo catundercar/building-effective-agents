@@ -1,0 +1,16 @@
+[project]
+name = "phase-1-tool-system"
+version = "0.1.0"
+description = "Phase 1: Tool System & ACI Design — Agent 與外部世界交互的接口層"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-mock>=3.14"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
