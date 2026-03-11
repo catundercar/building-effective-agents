@@ -1,5 +1,7 @@
 """Shared testing utilities for all phases."""
 
+from __future__ import annotations
+
 from unittest.mock import MagicMock, AsyncMock
 
 
