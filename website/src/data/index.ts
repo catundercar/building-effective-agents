@@ -1,5 +1,7 @@
 import { phase0Content } from "./phase0";
 import { phase0ContentZhCN } from "./phase0.zh-CN";
+import { phase1Content } from "./phase1";
+import { phase1ContentZhCN } from "./phase1.zh-CN";
 import { phase2Content } from "./phase2";
 import { phase2ContentZhCN } from "./phase2.zh-CN";
 import { phase3Content } from "./phase3";
@@ -14,6 +16,7 @@ import type { Locale } from "../i18n";
 const PHASE_CONTENT: Record<string, Record<number, PhaseContent>> = {
   "zh-TW": {
     0: phase0Content,
+    1: phase1Content,
     2: phase2Content,
     3: phase3Content,
     4: phase4Content,
@@ -21,6 +24,7 @@ const PHASE_CONTENT: Record<string, Record<number, PhaseContent>> = {
   },
   "zh-CN": {
     0: phase0ContentZhCN,
+    1: phase1ContentZhCN,
     2: phase2ContentZhCN,
     3: phase3ContentZhCN,
     4: phase4ContentZhCN,
@@ -28,6 +32,7 @@ const PHASE_CONTENT: Record<string, Record<number, PhaseContent>> = {
   },
   en: {
     0: phase0Content,
+    1: phase1Content,
     2: phase2Content,
     3: phase3Content,
     4: phase4Content,
