@@ -1,0 +1,17 @@
+[project]
+name = "phase-3-agent-core"
+version = "0.1.0"
+description = "Phase 3: Agentic Loop — 讓 Agent 自主推理與行動"
+requires-python = ">=3.11"
+dependencies = ["anthropic>=0.40.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.24", "pytest-mock>=3.14"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
