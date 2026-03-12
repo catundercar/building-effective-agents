@@ -160,7 +160,7 @@ class Tracer:
         """
         # HINT: 1. 構建標題行: f"Trace: {trace.name} ({trace.total_duration_ms:.0f}ms, {trace.total_tokens} tokens)"
         # HINT: 2. 遞迴格式化 root_span 和所有子 span
-        # HINT: 3. 使用 self._format_span_tree(span, prefix, is_last) 遞迴格式化
+        # HINT: 3. 使用 self._format_span(span, prefix, is_last) 遞迴格式化
         # HINT: 4. 每個 span 顯示: 名稱 + 耗時
         # HINT: 5. 如果 self.config.verbose，額外顯示 input_data 和 output_data
         # HINT: 6. 使用 "├── " 和 "└── " 作為樹狀分支符號

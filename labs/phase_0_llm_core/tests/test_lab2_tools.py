@@ -328,3 +328,24 @@ class TestToolUseLoop:
             )
 
         assert mock_client.create_message.call_count == 3
+
+    def test_should_stop_on_max_tokens(self):
+        """max_tokens stop_reason 時應該停止循環"""
+        mock_client = MagicMock()
+        response = LLMResponse(
+            id="msg_max",
+            content=[TextBlock(text="Response truncated")],
+            model="claude-sonnet-4-20250514",
+            stop_reason="max_tokens",
+            usage=TokenUsage(input_tokens=10, output_tokens=10),
+        )
+        mock_client.create_message.return_value = response
+
+        result = tool_use_loop(
+            client=mock_client,
+            executor=ToolExecutor(ToolRegistry()),
+            initial_messages=[Message(role="user", content="test")],
+            tools=[],
+        )
+        assert result["response"].stop_reason == "max_tokens"
+        assert mock_client.create_message.call_count == 1

@@ -790,7 +790,7 @@ my-agent-workflows/
 ### Lesson 5.1 — CLI 交互設計
 **類型**: 設計 + 代碼 · 120 min
 
-**教學目標**: 用 Ink（React for CLI）構建美觀且易用的終端界面。
+**教學目標**: 用 Ink（React for CLI）構建美觀且易用的終端界面。（實驗採用 Python ANSI 實現）
 
 **知識點**:
 - Ink 組件模型：Box, Text, useInput, useApp
@@ -852,6 +852,8 @@ my-agent-workflows/
 ---
 
 ### Lesson 5.3 — MCP 集成與插件系統
+（注：Lab 實現以 Session Management 取代，MCP 為進階延伸）
+
 **類型**: 代碼實踐 · 90 min
 
 **教學目標**: 接入 Model Context Protocol 生態，支持第三方工具擴展。
