@@ -1,5 +1,7 @@
 # 構建 Code Agent — 從零打造 AI 編程助手
 
+![Visitors](https://hits.sh/github.com/catundercar/building-effective-agents.svg?label=visitors&color=0A0A0B&labelColor=1a1a2e)
+
 > 🔧 **12 週工程實踐課程** · 基於 Anthropic「Building Effective Agents」設計哲學
 >
 > 從 LLM API 調用到完整 CLI Agent，每個 Phase 都有可運行的交付物，最終產出一個可發布的開源工具。
