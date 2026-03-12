@@ -129,7 +129,7 @@ class TestRenderToolCall:
         # Should be a compact summary, not the full card
         assert "read_file" in result
         # Should NOT contain the full card borders when details are hidden
-        assert "Input" not in result or len(result) < 200
+        assert "Input:" not in result
 
 
 # ======================================================================
