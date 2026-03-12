@@ -217,7 +217,7 @@ def run_chain(self, steps, initial_input):
     for i, step in enumerate(steps):
         try:
             output = self.run_step(step, current_input)
-            trace.append({"step": step.name, "output": output})
+            trace.append({"name": step.name, "output": output})
             current_input = output  # 下一步的输入 = 这一步的输出
         except Exception as e:
             return ChainResult(
@@ -245,11 +245,11 @@ def run_chain(self, steps, initial_input):
               code: `# 伪代码
 def _apply_gate(self, step, output):
     try:
-        passed = step.gate(output)
+        passed, reason = step.gate(output)
         if passed:
-            return (True, "Gate check passed")
+            return (True, reason)
         else:
-            return (False, f"Gate check failed for step '{step.name}'")
+            return (False, reason)
     except Exception as e:
         return (False, f"Gate error: {e}")`,
             },
@@ -312,7 +312,7 @@ return output`,
 trace = []
 for step in steps:
     output = self.run_step(step, current_input)
-    trace.append({"step": step.name, "output": output})
+    trace.append({"name": step.name, "output": output})
     current_input = output
 return ChainResult(success=True, ...)`,
         },
@@ -689,7 +689,8 @@ def start_span(self, name, parent, input_data=None):
               code: `# 伪代码
 def end_span(self, span, output_data=None):
     span.end_time = time.time()
-    span.output_data = output_data
+    if output_data is not None:
+        span.output_data = output_data
 
 def end_trace(self, trace):
     trace.end_time = time.time()
@@ -925,7 +926,6 @@ python -m phase_2.cli
 
 # CLI 中可用的指令：
 # /trace   — 查看最近一次的 trace
-# /routes  — 列出所有路由
 # /exit    — 退出`,
         },
         {

@@ -114,10 +114,11 @@ MAGENTA = "\\033[35m"  # 進度、統計`,
 def render_streaming_text(self, text_delta):
     # 直接輸出文字增量（不換行）
     if self.config.color_enabled:
-        sys.stdout.write(text_delta)
+        sys.stdout.write(self._colorize(text_delta, self.theme.text_color))
     else:
         sys.stdout.write(text_delta)
-    sys.stdout.flush()`,
+    sys.stdout.flush()
+    return text_delta`,
             },
             {
               type: "heading",
@@ -579,7 +580,7 @@ def load_session(self, session_id):
 def list_sessions(self):
     storage = Path(self.config.storage_dir).expanduser()
     summaries = []
-    for f in sorted(storage.glob("sess_*.json"), reverse=True):
+    for f in sorted(storage.glob("*.json"), reverse=True):
         data = json.loads(f.read_text())
         summaries.append(SessionSummary(
             id=data["id"],
@@ -641,7 +642,7 @@ pytest tests/test_lab3_session.py -v`,
             "列出所有保存的 Session，返回摘要列表（ID、時間、消息數、預覽）。",
           labFile: "phase_5/session.py",
           hints: [
-            "用 glob('sess_*.json') 找所有 session 文件",
+            "用 glob('*.json') 找所有 session 文件",
             "按時間倒序排列",
             "preview 取第一條消息的前 50 字符",
           ],

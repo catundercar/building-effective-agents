@@ -88,6 +88,14 @@ class TestReadFile:
         result = file_tools.read_file("/etc/passwd")
         assert result.is_error
 
+    def test_should_error_on_file_too_large(self, file_tools: FileTools, sandbox: Path):
+        """超過 max_file_size 的文件應返回錯誤。"""
+        big_file = sandbox / "big.bin"
+        # Write a file exceeding the default 1MB limit
+        big_file.write_bytes(b"x" * (1_048_576 + 1))
+        result = file_tools.read_file(str(big_file))
+        assert result.is_error
+
 
 # ======================================================================
 # write_file tests
@@ -124,6 +132,16 @@ class TestWriteFile:
         result = file_tools.write_file(path, "deep content")
         assert not result.is_error
         assert Path(path).read_text() == "deep content"
+
+    def test_should_error_on_relative_path(self, file_tools: FileTools):
+        """相對路徑應被拒絕。"""
+        result = file_tools.write_file("hello.py", "content")
+        assert result.is_error
+
+    def test_should_error_on_path_outside_sandbox(self, file_tools: FileTools):
+        """沙箱外的路徑應被拒絕。"""
+        result = file_tools.write_file("/tmp/evil.py", "content")
+        assert result.is_error
 
 
 # ======================================================================

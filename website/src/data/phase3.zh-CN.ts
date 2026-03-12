@@ -385,7 +385,7 @@ def categorize_error(self, error, context):
     error_str = str(error).lower()
 
     # 致命错误
-    if "permission denied" in error_str or "not found" in error_str:
+    if "permission denied" in error_str or "401" in error_str or "403" in error_str:
         return "fatal"
 
     # 可重试错误

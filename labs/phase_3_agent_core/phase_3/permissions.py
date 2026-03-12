@@ -216,7 +216,7 @@ class PermissionManager:
 
             # 檢查 tool_input 中是否有危險信號
             input_str = str(tool_input).lower()
-            if any(kw in input_str for kw in ["rm ", "sudo", "chmod", "DROP TABLE"]):
+            if any(kw in input_str for kw in ["rm ", "sudo", "chmod", "drop table"]):
                 return "high"
 
             return "medium"  # 默認中等風險

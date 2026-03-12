@@ -14,12 +14,16 @@
 from __future__ import annotations
 
 import sys
+from typing import TYPE_CHECKING
 
 from .chain import ChainRunner
 from .router import Router
 from .sample_pipelines import code_review_pipeline, create_sample_routes
 from .tracing import Tracer
-from .types import ChainConfig, RouterConfig, TraceConfig
+from .types import ChainConfig, RouterConfig, Trace, TraceConfig
+
+if TYPE_CHECKING:
+    pass
 
 # ANSI color codes
 RESET = "\033[0m"
@@ -54,8 +58,8 @@ def print_help() -> None:
     print(f"  {GREEN}/exit{RESET}    — 退出程式\n")
 
 
-def run_chain_demo(llm_client: object) -> None:
-    """Run a chain demo with user-provided code."""
+def run_chain_demo(llm_client: object, tracer: Tracer | None = None) -> Trace | None:
+    """Run a chain demo with user-provided code. Returns a Trace if tracer is provided."""
     print(f"\n{BOLD}{CYAN}=== Prompt Chain Demo ==={RESET}")
     print(f"{DIM}輸入一段程式碼進行 Code Review（輸入空行結束）:{RESET}")
 
@@ -79,6 +83,10 @@ def run_chain_demo(llm_client: object) -> None:
         steps = code_review_pipeline()
         print(f"\n{DIM}Running {len(steps)}-step chain...{RESET}")
 
+        trace = None
+        if tracer is not None:
+            trace = tracer.start_trace("chain_demo")
+
         result = runner.run_chain(steps, initial_input=code)
 
         if result.success:
@@ -98,20 +106,25 @@ def run_chain_demo(llm_client: object) -> None:
                 status = f"{GREEN}OK{RESET}" if "output" in entry else f"{RED}FAIL{RESET}"
                 print(f"  {entry['name']}: {status} ({duration:.0f}ms)")
 
+        if tracer is not None and trace is not None:
+            tracer.end_trace(trace)
+        return trace
+
     except NotImplementedError as e:
         print(f"\n{RED}功能尚未實現: {e}{RESET}")
         print(f"{DIM}請先完成 Lab 1 (chain.py){RESET}")
+        return None
 
 
-def run_route_demo(llm_client: object) -> None:
-    """Run a routing demo."""
+def run_route_demo(llm_client: object, tracer: Tracer | None = None) -> Trace | None:
+    """Run a routing demo. Returns a Trace if tracer is provided."""
     print(f"\n{BOLD}{CYAN}=== Routing Demo ==={RESET}")
     print(f"{DIM}輸入一段文字，Router 會分類並路由:{RESET}")
 
     try:
         user_input = input(f"{BOLD}{GREEN}Input> {RESET}").strip()
     except (EOFError, KeyboardInterrupt):
-        return
+        return None
 
     if not user_input:
         user_input = "請幫我解釋這個函數的作用"
@@ -125,6 +138,10 @@ def run_route_demo(llm_client: object) -> None:
             config=RouterConfig(confidence_threshold=0.7, fallback_route="chat"),
         )
 
+        trace = None
+        if tracer is not None:
+            trace = tracer.start_trace("route_demo")
+
         result = router.route(user_input)
 
         print(f"\n{BOLD}Routing Result:{RESET}")
@@ -134,9 +151,14 @@ def run_route_demo(llm_client: object) -> None:
         print(f"\n{BOLD}Handler Output:{RESET}")
         print(f"  {result.handler_output}")
 
+        if tracer is not None and trace is not None:
+            tracer.end_trace(trace)
+        return trace
+
     except NotImplementedError as e:
         print(f"\n{RED}功能尚未實現: {e}{RESET}")
         print(f"{DIM}請先完成 Lab 2 (router.py){RESET}")
+        return None
 
 
 def main() -> None:
@@ -178,12 +200,12 @@ def main() -> None:
                 if llm_client is None:
                     print(f"{RED}需要 LLM 客戶端。請設置 ANTHROPIC_API_KEY。{RESET}")
                 else:
-                    run_chain_demo(llm_client)
+                    last_trace = run_chain_demo(llm_client, tracer) or last_trace
             elif cmd == "/route":
                 if llm_client is None:
                     print(f"{RED}需要 LLM 客戶端。請設置 ANTHROPIC_API_KEY。{RESET}")
                 else:
-                    run_route_demo(llm_client)
+                    last_trace = run_route_demo(llm_client, tracer) or last_trace
             elif cmd == "/trace":
                 if last_trace is None:
                     print(f"{DIM}尚無追蹤記錄。先運行 /chain 或 /route。{RESET}")
@@ -199,7 +221,7 @@ def main() -> None:
 
         # For free-form input, try routing
         if llm_client is not None:
-            run_route_demo(llm_client)
+            last_trace = run_route_demo(llm_client, tracer) or last_trace
         else:
             print(f"{DIM}請設置 ANTHROPIC_API_KEY 以啟用互動功能{RESET}")
 

@@ -108,7 +108,7 @@ class AgentLoop:
                 d. 處理響應: step = self._process_response(response)
                    step.iteration = iteration
                    step.tokens_used = tokens_used
-                e. 加入 trace: self.state.trace.append(step) (假設 state 有 trace)
+                e. 加入 trace: trace_steps.append(step) (在 run() 開始時初始化 trace_steps = [])
                 f. 如果 response.stop_reason == "end_turn":
                    - 提取最終文字輸出
                    - 返回成功的 AgentResult

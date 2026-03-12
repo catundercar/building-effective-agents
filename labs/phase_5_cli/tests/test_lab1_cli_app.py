@@ -67,14 +67,14 @@ class TestRenderStreamingText:
 
     def test_render_streaming_text_with_color(self, renderer):
         """啟用顏色時，輸出應包含 ANSI 碼。"""
-        result = renderer.render_streaming_text.__wrapped__(renderer, "test") if hasattr(renderer.render_streaming_text, '__wrapped__') else None
-        # Use a simple approach: call and check result contains text
         captured = StringIO()
         with patch("sys.stdout", captured):
             result = renderer.render_streaming_text("colored")
 
-        # With color enabled, result should contain ANSI escape sequences
+        # With color enabled, stdout output should contain ANSI escape sequences
+        output = captured.getvalue()
         assert "colored" in result
+        assert "\033[" in output, "Color-enabled renderer should emit ANSI codes to stdout"
 
     def test_render_streaming_text_empty_string(self, renderer):
         """空字串應返回空結果。"""

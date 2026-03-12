@@ -105,14 +105,15 @@ class ErrorRecovery:
             fatal_keywords = ["permission denied", "authentication", "invalid api", "401", "403"]
 
             category = "strategy_change"  # 默認
-            for kw in retryable_keywords:
-                if kw in error_msg:
-                    category = "retryable"
-                    break
             for kw in fatal_keywords:
                 if kw in error_msg:
                     category = "fatal"
                     break
+            else:
+                for kw in retryable_keywords:
+                    if kw in error_msg:
+                        category = "retryable"
+                        break
 
             current_attempt = len([r for r in self.error_history
                                    if r.error_type == error_type]) + 1
