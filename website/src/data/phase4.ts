@@ -13,6 +13,7 @@ export const phase4Content: PhaseContent = {
       subtitle: "Dynamic Task Decomposition & Worker Dispatch",
       type: "概念 + 實踐",
       duration: "3.5 hrs",
+      visualization: "phase4-orchestrator",
       objectives: [
         "理解 Orchestrator 的職責：分析 → 分解 → 分派 → 聚合",
         "實現動態任務分解：LLM 根據項目結構規劃子任務",

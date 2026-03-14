@@ -13,6 +13,7 @@ export const phase3ContentZhCN: PhaseContent = {
       subtitle: "Building the Reasoning Engine",
       type: "概念 + 实践",
       duration: "3.5 hrs",
+      visualization: "phase3-react",
       objectives: [
         "理解从 Workflow 到 Agent 的质变：流程由 LLM 动态决定",
         "掌握 ReAct 模式：Think → Act → Observe → Loop",

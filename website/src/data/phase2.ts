@@ -13,6 +13,7 @@ export const phase2Content: PhaseContent = {
       subtitle: "Building a Chain Runner for Sequential LLM Calls",
       type: "概念 + 實踐",
       duration: "3 hrs",
+      visualization: "phase2-chain",
       objectives: [
         "理解 Prompt Chaining 的設計原則：每步做一件事",
         "掌握 Gate 檢查機制：中間結果的程序化驗證",
@@ -366,6 +367,7 @@ return ChainResult(success=True, ...)`,
       subtitle: "Intent Classification & Smart Dispatching",
       type: "概念 + 實踐",
       duration: "2.5 hrs",
+      visualization: "phase2-router",
       objectives: [
         "理解 Routing 的核心：分類 + 分發",
         "掌握 LLM-based 意圖分類的設計方法",

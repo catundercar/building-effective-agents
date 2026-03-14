@@ -3,6 +3,8 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { getPhaseContent, getLesson } from "../data";
 import type { ContentBlock, ContentSection } from "../data/types";
 import { useLocale } from "../i18n";
+import { VISUALIZATION_MAP } from "../components/visualizations";
+import WhatsNew, { WHATS_NEW_DATA } from "../components/diff/WhatsNew";
 
 export default function LessonPage() {
   const { phaseId, lessonId } = useParams<{ phaseId: string; lessonId: string }>();
@@ -31,7 +33,7 @@ export default function LessonPage() {
       <div style={styles.page}>
         <div style={styles.container}>
           <Link to="/" style={styles.backLink}>{t("lesson.back")}</Link>
-          <div style={{ marginTop: 48, textAlign: "center", color: "#71717A" }}>
+          <div style={{ marginTop: 48, textAlign: "center", color: "var(--text-muted)" }}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>404</div>
             <div style={{ fontSize: 15 }}>{t("lesson.notFound")}</div>
           </div>
@@ -96,11 +98,11 @@ export default function LessonPage() {
             </span>
             <span style={{
               padding: "4px 10px",
-              background: "rgba(228,228,231,0.06)",
-              border: "1px solid rgba(228,228,231,0.1)",
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
               borderRadius: 4,
               fontSize: 11,
-              color: "#A1A1AA",
+              color: "var(--text-secondary)",
             }}>
               {lesson.type} · {lesson.duration}
             </span>
@@ -111,11 +113,11 @@ export default function LessonPage() {
             fontWeight: 700,
             lineHeight: 1.3,
             margin: "0 0 6px",
-            color: "#E4E4E7",
+            color: "var(--text)",
           }}>
             {lesson.title}
           </h1>
-          <p style={{ fontSize: 14, color: "#52525B", fontStyle: "italic", margin: 0 }}>
+          <p style={{ fontSize: 14, color: "var(--text-dim)", fontStyle: "italic", margin: 0 }}>
             {lesson.subtitle}
           </p>
 
@@ -134,6 +136,11 @@ export default function LessonPage() {
           </div>
         </header>
 
+        {/* What's New */}
+        {lId === 1 && WHATS_NEW_DATA[pId] && (
+          <WhatsNew phaseId={pId} data={WHATS_NEW_DATA[pId]} color={color} />
+        )}
+
         {/* Learning Objectives */}
         <section style={{ marginBottom: 36 }}>
           <SectionTitle>{t("lesson.objectives")}</SectionTitle>
@@ -143,9 +150,9 @@ export default function LessonPage() {
                 display: "flex",
                 gap: 12,
                 padding: "10px 0",
-                borderBottom: i < lesson.objectives.length - 1 ? "1px solid rgba(228,228,231,0.06)" : "none",
+                borderBottom: i < lesson.objectives.length - 1 ? "1px solid var(--border-faint)" : "none",
                 fontSize: 13,
-                color: "#A1A1AA",
+                color: "var(--text-secondary)",
                 lineHeight: 1.7,
               }}>
                 <span style={{
@@ -164,6 +171,17 @@ export default function LessonPage() {
           </div>
         </section>
 
+        {/* Interactive Visualization */}
+        {lesson.visualization && VISUALIZATION_MAP[lesson.visualization] && (() => {
+          const VizComponent = VISUALIZATION_MAP[lesson.visualization!];
+          return (
+            <section style={{ marginBottom: 36 }}>
+              <SectionTitle>{t("lesson.visualization")}</SectionTitle>
+              <VizComponent color={color} />
+            </section>
+          );
+        })()}
+
         {/* Content Sections */}
         {lesson.sections.length > 0 && (
           <section style={{ marginBottom: 36 }}>
@@ -176,7 +194,7 @@ export default function LessonPage() {
                     ...styles.card,
                     cursor: "pointer",
                     transition: "border-color 0.2s",
-                    borderColor: isOpen ? `${color}44` : "rgba(228,228,231,0.08)",
+                    borderColor: isOpen ? `${color}44` : "var(--surface-card-border)",
                   }}>
                     <div
                       onClick={() => toggleSection(i)}
@@ -192,21 +210,21 @@ export default function LessonPage() {
                           width: 6,
                           height: 6,
                           borderRadius: "50%",
-                          background: isOpen ? color : "#52525B",
+                          background: isOpen ? color : "var(--text-dim)",
                           flexShrink: 0,
                           transition: "background 0.2s",
                         }} />
                         <span style={{
                           fontSize: 14,
                           fontWeight: 600,
-                          color: isOpen ? "#E4E4E7" : "#A1A1AA",
+                          color: isOpen ? "var(--text)" : "var(--text-secondary)",
                           transition: "color 0.2s",
                         }}>
                           {sec.title}
                         </span>
                       </div>
                       <span style={{
-                        color: "#52525B",
+                        color: "var(--text-dim)",
                         fontSize: 12,
                         transform: isOpen ? "rotate(90deg)" : "rotate(0)",
                         transition: "transform 0.2s",
@@ -217,7 +235,7 @@ export default function LessonPage() {
                       <div style={{
                         marginTop: 16,
                         paddingTop: 16,
-                        borderTop: "1px solid rgba(228,228,231,0.06)",
+                        borderTop: "1px solid var(--border-faint)",
                         animation: "fadeIn 0.3s ease",
                       }}>
                         <RenderBlocks blocks={sec.blocks} color={color} accent={accent} />
@@ -253,7 +271,7 @@ export default function LessonPage() {
                     }}>
                       Step {ex.id}
                     </code>
-                    <span style={{ fontSize: 14, fontWeight: 600, color: "#E4E4E7" }}>
+                    <span style={{ fontSize: 14, fontWeight: 600, color: "var(--text)" }}>
                       {ex.title}
                     </span>
                   </div>
@@ -261,7 +279,7 @@ export default function LessonPage() {
                   {/* Description */}
                   <pre style={{
                     fontSize: 13,
-                    color: "#A1A1AA",
+                    color: "var(--text-secondary)",
                     lineHeight: 1.8,
                     margin: "0 0 12px",
                     whiteSpace: "pre-wrap",
@@ -278,14 +296,14 @@ export default function LessonPage() {
                       alignItems: "center",
                       gap: 6,
                       padding: "4px 10px",
-                      background: "rgba(228,228,231,0.06)",
+                      background: "var(--surface)",
                       borderRadius: 4,
                       fontSize: 12,
-                      color: "#71717A",
+                      color: "var(--text-muted)",
                       marginBottom: 12,
                     }}>
                       <span style={{ opacity: 0.6 }}>📁</span>
-                      <code style={{ color: "#A1A1AA" }}>{ex.labFile}</code>
+                      <code style={{ color: "var(--text-secondary)" }}>{ex.labFile}</code>
                     </div>
                   )}
 
@@ -333,19 +351,19 @@ export default function LessonPage() {
                         <div style={{
                           marginTop: 8,
                           padding: "10px 14px",
-                          background: "rgba(228,228,231,0.04)",
+                          background: "var(--surface-card)",
                           borderRadius: 6,
                           animation: "fadeIn 0.2s ease",
                         }}>
                           {ex.hints.map((hint, j) => (
                             <div key={j} style={{
                               fontSize: 12,
-                              color: "#71717A",
+                              color: "var(--text-muted)",
                               padding: "4px 0",
                               display: "flex",
                               gap: 8,
                             }}>
-                              <span style={{ color: "#52525B", flexShrink: 0 }}>💡</span>
+                              <span style={{ color: "var(--text-dim)", flexShrink: 0 }}>💡</span>
                               <span>{hint}</span>
                             </div>
                           ))}
@@ -370,7 +388,7 @@ export default function LessonPage() {
                   alignItems: "flex-start",
                   gap: 10,
                   padding: "8px 0",
-                  borderBottom: i < lesson.acceptanceCriteria.length - 1 ? "1px solid rgba(228,228,231,0.06)" : "none",
+                  borderBottom: i < lesson.acceptanceCriteria.length - 1 ? "1px solid var(--border-faint)" : "none",
                 }}>
                   <span style={{
                     display: "inline-block",
@@ -381,7 +399,7 @@ export default function LessonPage() {
                     flexShrink: 0,
                     marginTop: 2,
                   }} />
-                  <span style={{ fontSize: 13, color: "#A1A1AA", lineHeight: 1.6 }}>{ac}</span>
+                  <span style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.6 }}>{ac}</span>
                 </div>
               ))}
             </div>
@@ -410,8 +428,8 @@ export default function LessonPage() {
                     e.currentTarget.style.background = `${color}08`;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(228,228,231,0.08)";
-                    e.currentTarget.style.background = "rgba(228,228,231,0.03)";
+                    e.currentTarget.style.borderColor = "var(--surface-card-border)";
+                    e.currentTarget.style.background = "var(--surface-card)";
                   }}
                 >
                   <div style={{
@@ -426,7 +444,7 @@ export default function LessonPage() {
                     {ref.title}
                     <span style={{ fontSize: 11, opacity: 0.6 }}>↗</span>
                   </div>
-                  <div style={{ fontSize: 12, color: "#71717A", lineHeight: 1.6 }}>
+                  <div style={{ fontSize: 12, color: "var(--text-muted)", lineHeight: 1.6 }}>
                     {ref.description}
                   </div>
                 </a>
@@ -443,7 +461,7 @@ export default function LessonPage() {
           flexWrap: "wrap",
           gap: 12,
           paddingTop: 24,
-          borderTop: "1px solid rgba(228,228,231,0.08)",
+          borderTop: "1px solid var(--border-subtle)",
           marginBottom: 80,
         }}>
           <div>
@@ -488,7 +506,7 @@ function RenderBlock({ block, color, accent }: { block: ContentBlock; color: str
       return (
         <p style={{
           fontSize: 13,
-          color: "#A1A1AA",
+          color: "var(--text-secondary)",
           lineHeight: 1.85,
           margin: "0 0 16px",
         }}>
@@ -502,7 +520,7 @@ function RenderBlock({ block, color, accent }: { block: ContentBlock; color: str
         <div style={{
           fontSize: sizes[block.level],
           fontWeight: 600,
-          color: block.level === 2 ? "#E4E4E7" : block.level === 3 ? "#D4D4D8" : "#A1A1AA",
+          color: block.level === 2 ? "var(--text)" : block.level === 3 ? "var(--text)" : "var(--text-secondary)",
           margin: block.level === 2 ? "28px 0 12px" : "20px 0 8px",
           paddingBottom: block.level === 2 ? 8 : 0,
           borderBottom: block.level === 2 ? "1px solid rgba(228,228,231,0.08)" : "none",
@@ -527,9 +545,9 @@ function RenderBlock({ block, color, accent }: { block: ContentBlock; color: str
         <pre style={{
           fontSize: 12,
           lineHeight: 1.5,
-          color: "#71717A",
-          background: "rgba(228,228,231,0.04)",
-          border: "1px solid rgba(228,228,231,0.08)",
+          color: "var(--text-muted)",
+          background: "var(--surface-card)",
+          border: "1px solid var(--surface-card-border)",
           borderRadius: 8,
           padding: "16px 20px",
           margin: "0 0 16px",
@@ -557,7 +575,7 @@ function RenderBlock({ block, color, accent }: { block: ContentBlock; color: str
                     textAlign: "left",
                     padding: "8px 12px",
                     borderBottom: "1px solid rgba(228,228,231,0.15)",
-                    color: "#E4E4E7",
+                    color: "var(--text)",
                     fontWeight: 600,
                     fontSize: 11,
                     letterSpacing: "0.05em",
@@ -575,7 +593,7 @@ function RenderBlock({ block, color, accent }: { block: ContentBlock; color: str
                     <td key={j} style={{
                       padding: "8px 12px",
                       borderBottom: "1px solid rgba(228,228,231,0.06)",
-                      color: "#A1A1AA",
+                      color: "var(--text-secondary)",
                       lineHeight: 1.6,
                     }}>
                       {cell}
@@ -605,7 +623,7 @@ function RenderBlock({ block, color, accent }: { block: ContentBlock; color: str
           margin: "0 0 16px",
           fontSize: 13,
           lineHeight: 1.8,
-          color: "#A1A1AA",
+          color: "var(--text-secondary)",
         }}>
           {block.text}
         </div>
@@ -621,10 +639,10 @@ function RenderBlock({ block, color, accent }: { block: ContentBlock; color: str
               gap: 10,
               padding: "4px 0",
               fontSize: 13,
-              color: "#A1A1AA",
+              color: "var(--text-secondary)",
               lineHeight: 1.7,
             }}>
-              <span style={{ color: "#52525B", flexShrink: 0, width: 16, textAlign: "right" as const }}>
+              <span style={{ color: "var(--text-dim)", flexShrink: 0, width: 16, textAlign: "right" as const }}>
                 {block.ordered ? `${i + 1}.` : "·"}
               </span>
               <span>{item}</span>
@@ -644,7 +662,7 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
       fontSize: 10,
-      color: "#71717A",
+      color: "var(--text-muted)",
       letterSpacing: "0.12em",
       textTransform: "uppercase" as const,
       marginBottom: 12,
@@ -660,9 +678,9 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 const codeBlockStyle: React.CSSProperties = {
   fontSize: 12,
   lineHeight: 1.6,
-  color: "#D4D4D8",
-  background: "rgba(0,0,0,0.4)",
-  border: "1px solid rgba(228,228,231,0.08)",
+  color: "var(--text)",
+  background: "var(--code-bg)",
+  border: "1px solid var(--surface-card-border)",
   borderRadius: 8,
   padding: "14px 18px",
   overflowX: "auto",
@@ -675,7 +693,7 @@ const toggleBtnStyle: React.CSSProperties = {
   border: "none",
   cursor: "pointer",
   fontSize: 12,
-  color: "#52525B",
+  color: "var(--text-dim)",
   padding: "4px 0",
   fontFamily: "inherit",
   display: "flex",
@@ -689,7 +707,7 @@ function navBtnStyle(color: string): React.CSSProperties {
     background: `${color}12`,
     border: `1px solid ${color}33`,
     borderRadius: 4,
-    color: "#A1A1AA",
+    color: "var(--text-secondary)",
     fontSize: 12,
     cursor: "pointer",
     fontFamily: "inherit",
@@ -698,7 +716,7 @@ function navBtnStyle(color: string): React.CSSProperties {
 
 function navLinkStyle(): React.CSSProperties {
   return {
-    color: "#71717A",
+    color: "var(--text-muted)",
     textDecoration: "none",
     fontSize: 13,
     padding: "8px 0",
@@ -709,18 +727,19 @@ function navLinkStyle(): React.CSSProperties {
 const styles: Record<string, React.CSSProperties> = {
   page: {
     fontFamily: "'JetBrains Mono', 'SF Mono', 'Fira Code', monospace",
-    background: "#0A0A0B",
-    color: "#E4E4E7",
+    background: "var(--bg)",
+    color: "var(--text)",
     minHeight: "100vh",
     position: "relative",
+    transition: "background 0.3s ease, color 0.3s ease",
   },
   grid: {
     position: "fixed",
     inset: 0,
     zIndex: 0,
     backgroundImage: `
-      linear-gradient(rgba(228,228,231,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(228,228,231,0.03) 1px, transparent 1px)
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)
     `,
     backgroundSize: "40px 40px",
     pointerEvents: "none" as const,
@@ -733,7 +752,7 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "32px 20px 0",
   },
   backLink: {
-    color: "#52525B",
+    color: "var(--text-dim)",
     textDecoration: "none",
     fontSize: 13,
     display: "inline-flex",
@@ -743,8 +762,8 @@ const styles: Record<string, React.CSSProperties> = {
   },
   card: {
     padding: "16px 20px",
-    background: "rgba(228,228,231,0.03)",
-    border: "1px solid rgba(228,228,231,0.08)",
+    background: "var(--surface-card)",
+    border: "1px solid var(--surface-card-border)",
     borderRadius: 8,
   },
 };

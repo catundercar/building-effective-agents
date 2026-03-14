@@ -13,6 +13,7 @@ export const phase5ContentZhCN: PhaseContent = {
       subtitle: "Building a Beautiful Terminal UI",
       type: "设计 + 实践",
       duration: "3.5 hrs",
+      visualization: "phase5-cli",
       objectives: [
         "设计终端 UI 的色彩系统和排版规范",
         "实现 Streaming 文字的实时渲染",

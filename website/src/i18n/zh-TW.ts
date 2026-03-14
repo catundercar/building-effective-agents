@@ -20,6 +20,7 @@ export const zhTW: Record<string, string> = {
   // CourseRoadmap - Architecture tab
   "arch.desc": "整體架構採用分層設計，每一層對應一個 Phase 的交付物。上層依賴下層，但下層不感知上層存在。",
   "arch.dataflow": "核心數據流",
+  "arch.simulator": "交互式模擬器",
 
   // CourseRoadmap - Principles tab
   "principles.desc": "源自 Anthropic \"Building Effective Agents\" 的核心設計哲學，貫穿整個課程。",
@@ -43,6 +44,7 @@ export const zhTW: Record<string, string> = {
   "lesson.complete": "完成 Phase {phaseId} →",
   "lesson.objectives": "學習目標",
   "lesson.content": "課程內容",
+  "lesson.visualization": "交互式圖解",
   "lesson.exercises": "實戰練習",
   "lesson.criteria": "驗收標準",
   "lesson.references": "參考資料",

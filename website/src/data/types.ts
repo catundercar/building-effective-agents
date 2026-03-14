@@ -85,6 +85,7 @@ export interface Lesson {
   exercises: CodeExercise[];
   acceptanceCriteria: string[];
   references: LessonReference[];
+  visualization?: string; // ID mapping to a visualization component
 }
 
 export interface PhaseContent {

@@ -13,6 +13,7 @@ export const phase0ContentZhCN: PhaseContent = {
       subtitle: "Understanding the API & Building a Robust Client",
       type: "概念 + 实践",
       duration: "3 hrs",
+      visualization: "phase0-streaming",
       objectives: [
         "理解 Augmented LLM 的整体架构与三大核心模块",
         "掌握「对话是不断增长的数组」这一心智模型",
@@ -559,6 +560,7 @@ for num in count_slowly():
       subtitle: "Connecting LLM to the Real World",
       type: "概念 + 实践",
       duration: "3 hrs",
+      visualization: "phase0-tool-use",
       objectives: [
         "理解 Tool Use 为什么是 Agent 的关键能力",
         "掌握 Tool Use 的完整对话流和多轮循环机制",

@@ -13,6 +13,7 @@ export const phase1Content: PhaseContent = {
       subtitle: "Building a Scalable Tool Management System",
       type: "設計 + 實踐",
       duration: "3 hrs",
+      visualization: "phase1-registry",
       objectives: [
         "理解 Registry Pattern 在 Agent 系統中的角色",
         "掌握 Tool 的完整生命週期：定義 → 驗證 → 註冊 → 發現 → 調用",

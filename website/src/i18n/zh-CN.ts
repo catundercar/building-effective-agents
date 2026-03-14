@@ -20,6 +20,7 @@ export const zhCN: Record<string, string> = {
   // CourseRoadmap - Architecture tab
   "arch.desc": "整体架构采用分层设计，每一层对应一个 Phase 的交付物。上层依赖下层，但下层不感知上层存在。",
   "arch.dataflow": "核心数据流",
+  "arch.simulator": "交互式模拟器",
 
   // CourseRoadmap - Principles tab
   "principles.desc": "源自 Anthropic \"Building Effective Agents\" 的核心设计哲学，贯穿整个课程。",
@@ -43,6 +44,7 @@ export const zhCN: Record<string, string> = {
   "lesson.complete": "完成 Phase {phaseId} →",
   "lesson.objectives": "学习目标",
   "lesson.content": "课程内容",
+  "lesson.visualization": "交互式图解",
   "lesson.exercises": "实战练习",
   "lesson.criteria": "验收标准",
   "lesson.references": "参考资料",

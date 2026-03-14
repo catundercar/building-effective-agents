@@ -13,6 +13,7 @@ export const phase1ContentZhCN: PhaseContent = {
       subtitle: "Building a Scalable Tool Management System",
       type: "设计 + 实践",
       duration: "3 hrs",
+      visualization: "phase1-registry",
       objectives: [
         "理解 Registry Pattern 在 Agent 系统中的角色",
         "掌握 Tool 的完整生命周期：定义 → 验证 → 注册 → 发现 → 调用",

@@ -14,8 +14,8 @@ export default function LanguageSwitcher() {
       display: "inline-flex",
       gap: 2,
       padding: 2,
-      background: "rgba(228,228,231,0.06)",
-      border: "1px solid rgba(228,228,231,0.08)",
+      background: "var(--surface)",
+      border: "1px solid var(--border-subtle)",
       borderRadius: 6,
     }}>
       {LOCALES.map(({ key, labelKey }) => {
@@ -26,11 +26,11 @@ export default function LanguageSwitcher() {
             onClick={() => setLocale(key)}
             style={{
               padding: "4px 10px",
-              background: isActive ? "rgba(228,228,231,0.12)" : "transparent",
+              background: isActive ? "var(--surface-hover)" : "transparent",
               border: "1px solid",
-              borderColor: isActive ? "rgba(228,228,231,0.15)" : "transparent",
+              borderColor: isActive ? "var(--tab-active-border)" : "transparent",
               borderRadius: 4,
-              color: isActive ? "#E4E4E7" : "#52525B",
+              color: isActive ? "var(--text)" : "var(--text-dim)",
               fontSize: 11,
               cursor: "pointer",
               fontFamily: "'JetBrains Mono', 'SF Mono', 'Fira Code', monospace",

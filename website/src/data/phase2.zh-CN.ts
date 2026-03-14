@@ -13,6 +13,7 @@ export const phase2ContentZhCN: PhaseContent = {
       subtitle: "Building a Chain Runner for Sequential LLM Calls",
       type: "概念 + 实践",
       duration: "3 hrs",
+      visualization: "phase2-chain",
       objectives: [
         "理解 Prompt Chaining 的设计原则：每步做一件事",
         "掌握 Gate 检查机制：中间结果的程序化验证",
@@ -366,6 +367,7 @@ return ChainResult(success=True, ...)`,
       subtitle: "Intent Classification & Smart Dispatching",
       type: "概念 + 实践",
       duration: "2.5 hrs",
+      visualization: "phase2-router",
       objectives: [
         "理解 Routing 的核心：分类 + 分发",
         "掌握 LLM-based 意图分类的设计方法",

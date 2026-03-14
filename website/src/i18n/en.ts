@@ -20,6 +20,7 @@ export const en: Record<string, string> = {
   // CourseRoadmap - Architecture tab
   "arch.desc": "Layered architecture where each layer maps to a Phase deliverable. Upper layers depend on lower layers, but not vice versa.",
   "arch.dataflow": "Core Data Flow",
+  "arch.simulator": "Interactive Simulator",
 
   // CourseRoadmap - Principles tab
   "principles.desc": "Core design philosophy from Anthropic's \"Building Effective Agents\", applied throughout the course.",
@@ -43,6 +44,7 @@ export const en: Record<string, string> = {
   "lesson.complete": "Complete Phase {phaseId} →",
   "lesson.objectives": "Learning Objectives",
   "lesson.content": "Course Content",
+  "lesson.visualization": "Interactive Visualization",
   "lesson.exercises": "Hands-on Exercises",
   "lesson.criteria": "Acceptance Criteria",
   "lesson.references": "References",

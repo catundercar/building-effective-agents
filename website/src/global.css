@@ -1,7 +1,67 @@
+/* ─── CSS Variables (Theme System) ──────────────────────────── */
+
+:root {
+  /* Dark theme (default) */
+  --bg: #0A0A0B;
+  --bg-elevated: rgba(228,228,231,0.03);
+  --text: #E4E4E7;
+  --text-secondary: #A1A1AA;
+  --text-muted: #71717A;
+  --text-dim: #52525B;
+  --border: rgba(228,228,231,0.12);
+  --border-subtle: rgba(228,228,231,0.08);
+  --border-faint: rgba(228,228,231,0.06);
+  --border-hover: rgba(228,228,231,0.25);
+  --surface: rgba(228,228,231,0.05);
+  --surface-hover: rgba(228,228,231,0.1);
+  --surface-card: rgba(228,228,231,0.03);
+  --surface-card-border: rgba(228,228,231,0.08);
+  --code-bg: rgba(0,0,0,0.4);
+  --grid-line: rgba(228,228,231,0.03);
+  --scrollbar-thumb: #27272A;
+  --gradient-text-from: #E4E4E7;
+  --gradient-text-to: #A1A1AA;
+  --tab-active-bg: rgba(228,228,231,0.1);
+  --tab-active-border: rgba(228,228,231,0.15);
+}
+
+[data-theme="light"] {
+  --bg: #FAFAFA;
+  --bg-elevated: rgba(24,24,27,0.03);
+  --text: #18181B;
+  --text-secondary: #3F3F46;
+  --text-muted: #71717A;
+  --text-dim: #A1A1AA;
+  --border: rgba(24,24,27,0.12);
+  --border-subtle: rgba(24,24,27,0.08);
+  --border-faint: rgba(24,24,27,0.06);
+  --border-hover: rgba(24,24,27,0.25);
+  --surface: rgba(24,24,27,0.04);
+  --surface-hover: rgba(24,24,27,0.08);
+  --surface-card: rgba(24,24,27,0.02);
+  --surface-card-border: rgba(24,24,27,0.1);
+  --code-bg: rgba(24,24,27,0.04);
+  --grid-line: rgba(24,24,27,0.04);
+  --scrollbar-thumb: #D4D4D8;
+  --gradient-text-from: #18181B;
+  --gradient-text-to: #52525B;
+  --tab-active-bg: rgba(24,24,27,0.06);
+  --tab-active-border: rgba(24,24,27,0.12);
+}
+
+/* ─── Animations ──────────────────────────────────────────── */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-8px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ─── Base ──────────────────────────────────────────────────── */
 
 * { box-sizing: border-box; }
 button:hover { opacity: 0.9; }
@@ -9,15 +69,17 @@ a:hover { opacity: 0.85; }
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #27272A; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
 
 body {
   margin: 0;
-  background: #0A0A0B;
+  background: var(--bg);
   -webkit-text-size-adjust: 100%;
+  transition: background 0.3s ease;
 }
 
-/* Mobile responsive overrides */
+/* ─── Mobile ────────────────────────────────────────────────── */
+
 @media (max-width: 640px) {
   header {
     padding-left: 16px !important;
